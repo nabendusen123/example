@@ -11,14 +11,6 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	</http:listener-config>
 	<flow name="exampleFlow" doc:id="a82c6d5d-25cf-49d5-bd51-44f40269a0ba" >
 		<http:listener doc:name="Listener" doc:id="a2bea44b-1395-4a5d-b7bc-06bd4271fa42" config-ref="HTTP_Listener_config" path="/example"/>
-		<ee:transform doc:name="Transform Message" doc:id="fb3c2774-eeca-4b71-8fbc-4e556eb50561" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
-output application/json
----
-payload.user]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
 		<ee:transform doc:name="Transform Message" doc:id="b0314fde-e3c5-4798-8ee5-919d4634b172" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
