@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:sockets="http://www.mulesoft.org/schema/mule/sockets"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/sockets http://www.mulesoft.org/schema/mule/sockets/current/mule-sockets.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="70df7ef5-a160-41d5-8f93-7a438fc5b869" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="exampleFlow" doc:id="a82c6d5d-25cf-49d5-bd51-44f40269a0ba" >
+		<http:listener doc:name="Listener" doc:id="a2bea44b-1395-4a5d-b7bc-06bd4271fa42" config-ref="HTTP_Listener_config" path="/example"/>
+		<ee:transform doc:name="Transform Message" doc:id="17ea1712-99d1-4d20-966b-1c1de71cd253" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+users: {( payload map (object, index) -> {
+user: {
+fname: object.firstname,
+lname: object.lastname
+}
+}
+)}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="fb3c2774-eeca-4b71-8fbc-4e556eb50561" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload.user]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="b0314fde-e3c5-4798-8ee5-919d4634b172" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+flights: {(payload..*return map (object, index) -> {
+	flight: object
+}
+		
+)}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="5d7b5fc2-271b-4046-8695-a0269dfb6b3c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+x: {(payload map(object,index) -> 
+	 {airline: object.airline}
+
+)}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<set-payload value="Example" doc:name="Set Payload" doc:id="df0b5596-519f-4b0f-a706-4c7325286fb2" />
+	</flow>
+</mule>
