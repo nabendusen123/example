@@ -24,18 +24,7 @@ flights: {(payload..*return map (object, index) -> {
 ]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<ee:transform doc:name="Transform Message" doc:id="5d7b5fc2-271b-4046-8695-a0269dfb6b3c" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
-output application/xml
----
-x: {(payload map(object,index) -> 
-	 {airline: object.airline}
-
-)}
-]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
 		<set-payload value="Example" doc:name="Set Payload" doc:id="df0b5596-519f-4b0f-a706-4c7325286fb2" />
+		<logger level="INFO" doc:name="Logger" doc:id="a2516704-221d-4db9-875f-ffe96e24a6b2" message="'Hello'"/>
 	</flow>
 </mule>
