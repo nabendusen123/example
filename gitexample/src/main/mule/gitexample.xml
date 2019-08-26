@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="4879561c-3637-4eb7-8a7c-35066857048f" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="gitexampleFlow" doc:id="392809bb-8676-4852-952d-8c5615b4202b" >
+		<http:listener doc:name="Listener" doc:id="88285f5d-dd74-4eb4-8ac8-c05e4fcb32f9" config-ref="HTTP_Listener_config" path="/gitexample"/>
+		<set-payload value="#['Set gitexample']" doc:name="Set Payload" doc:id="1b0b6ba5-b4a1-474d-aaec-3067eef506bd" />
+	</flow>
+</mule>
